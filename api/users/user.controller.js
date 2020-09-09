@@ -140,12 +140,15 @@ module.exports = {
             const result = compareSync(body.password, results.password);
             if (result){
                 result.password = undefined;
-              
+                const jsontoken = sign({ result: results }, "qwe123",{
+                    expiresIn: "1h"
+                });
                 return res.json({
                     success: 1,
                     message: 'login success',
                     email: body.email,
-                    password : body.password
+                    password : body.password,
+                    token: jsontoken
                 });
             }
             else{
